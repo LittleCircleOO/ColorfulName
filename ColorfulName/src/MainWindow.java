@@ -70,7 +70,7 @@ public class MainWindow extends JFrame {
 		r = r.toUpperCase();
 		g = g.toUpperCase();
 		b = b.toUpperCase();
-		su.append("0x");
+		su.append("#");
 		su.append(r);
 		su.append(g);
 		su.append(b);
