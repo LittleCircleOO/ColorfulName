@@ -11,6 +11,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
@@ -23,6 +25,7 @@ import javax.swing.JColorChooser;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
@@ -87,6 +90,7 @@ public class MainWindow extends JFrame {
 	 */
 	public static void main(String[] args) {			//运行程序
 		UIManager.put("Button.select", new Color(191, 191, 192));	//按钮按下全局颜色修改
+		createfont();		//加载字体
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -112,6 +116,10 @@ public class MainWindow extends JFrame {
 	JButton printbutton;
 	JRadioButton humanfallflat;
 	JRadioButton jsb;
+	static LoadingWindow loadingtip = new LoadingWindow();		//加载框
+	JLabel tip5;		//效果预览
+	
+	/*输出按钮触发器*/
 	MouseAdapter printbuttonadapter = new MouseAdapter() {		//输出按钮鼠标触发效果
 		@Override
 		public void mouseEntered(MouseEvent arg0) {				//鼠标移入
@@ -132,18 +140,33 @@ public class MainWindow extends JFrame {
 			tip5.setForeground(color);
 		}
 	};
-	JLabel tip5;		//效果预览
-	
+		
 	/*颜色样式*/
 	private Color backgroundcolor = new Color(250, 250, 250);	//窗体背景颜色样式
 	private Color buttoncolor = new Color(233, 233, 234);		//按钮正常颜色样式
 	private Color buttonentercolor = new Color(201, 202, 203);	//按钮经过颜色样式
 	private Color textlinepresscolor = new Color(0, 188, 212);	//文本边框激活颜色样式
 	private Color textlinecolor = new Color(231, 231, 232);		//文本边框颜色样式
+	
+	/*图标样式*/
 	private ImageIcon uncheckedbutton = new ImageIcon(MainWindow.class.getResource("uncheckedbutton.png"));		//单选按钮未选择
 	private ImageIcon checkedbutton = new ImageIcon(MainWindow.class.getResource("checkedbutton.png"));			//单选按钮已选择
 	private ImageIcon exeicon = new ImageIcon(MainWindow.class.getResource("icon.png"));
 	private Image exeimage = exeicon.getImage();
+	
+	/*字体样式*/
+	private static void createfont() {
+		loadingtip.setVisible(true);
+		//JOptionPane.showMessageDialog(null,"正在加载字体文件,请稍后","请稍后...",JOptionPane.PLAIN_MESSAGE);
+		GraphicsEnvironment ge = null;
+		try{
+			ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, MainWindow.class.getResourceAsStream("SourceHanSansCN-Light.ttf")));
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, MainWindow.class.getResourceAsStream("SourceHanSansCN-Regular.ttf")));
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, MainWindow.class.getResourceAsStream("SourceHanSansCN-Medium.ttf")));
+		} catch(FontFormatException e){} catch (IOException e){}
+        loadingtip.dispose ();
+	}
 	
 	public MainWindow() {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\icon.png"));
@@ -249,10 +272,10 @@ public class MainWindow extends JFrame {
 						| UnsupportedLookAndFeelException e1) {
 					e1.printStackTrace();
 				}
-				SwingUtilities.updateComponentTreeUI(colorchooser);					//将样式提交到颜色选择器
-				color = colorchooser.showDialog(null, "选择颜色...", null);				//颜色选择
-				if(color == null) {
-					tip3.setText("请选择颜色");										//没选择颜色
+				SwingUtilities.updateComponentTreeUI(colorchooser);						//将样式提交到颜色选择器
+				Color getcolor = colorchooser.showDialog(null, "选择颜色...", color);		//颜色选择
+				if(getcolor == null && color == null) {								//情况1:第一次没选择颜色
+					tip3.setText("请选择颜色");
 					tip3.setFont(new Font("思源黑体 CN Light", Font.PLAIN, 14));
 					printbutton.setText("未选择颜色");
 					printbutton.removeActionListener(printbuttonclick);
@@ -260,7 +283,20 @@ public class MainWindow extends JFrame {
 					printbutton.setForeground(Color.GRAY);
 					tip3.setForeground(Color.BLACK);
 				}
-				else {															//选择了颜色
+				else if(getcolor != null) {											//情况2:选择了颜色
+					color = getcolor;
+					tip3.setText("您选择的颜色是:"+toHexFromColor(color));
+					tip3.setFont(new Font("思源黑体 CN Medium", Font.PLAIN, 14));
+					printbutton.setText("一键生成");
+					printbutton.addActionListener(printbuttonclick);
+					printbutton.addMouseListener(printbuttonadapter);
+					printbutton.setForeground(Color.BLACK);
+					tip3.setForeground(color);
+					newname.setText(null);
+					tip5.setText("效果预览");
+					tip5.setForeground(Color.BLACK);
+				}
+				else if(getcolor == null && color != null){							//情况3:第二次以后没选择颜色,保留之前的颜色
 					tip3.setText("您选择的颜色是:"+toHexFromColor(color));
 					tip3.setFont(new Font("思源黑体 CN Medium", Font.PLAIN, 14));
 					printbutton.setText("一键生成");
@@ -444,6 +480,5 @@ public class MainWindow extends JFrame {
 		tip5.setFont(new Font("思源黑体 CN Medium", Font.PLAIN, 20));
 		tip5.setBounds(20, 251, 212, 40);
 		getContentPane().add(tip5);
-		
 	}
 }
