@@ -9,6 +9,11 @@ import javax.swing.border.MatteBorder;
 
 public class LoadingWindow extends JDialog {
 
+	/**
+	 * º”‘ÿÃ· æøÚ
+	 */
+	private static final long serialVersionUID = 3692014001443266201L;
+
 	public LoadingWindow() {
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

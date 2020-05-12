@@ -5,15 +5,13 @@ import javax.swing.JFrame;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
-
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
 
@@ -33,6 +31,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 
 public class MainWindow extends JFrame {
+
+	/**
+	 * 主窗口
+	 */
+	private static final long serialVersionUID = 2836476333100030704L;
 
 	/*粘贴函数 from https://blog.csdn.net/xietansheng/article/details/70478266*/
 	public static String getClipboardString() {
@@ -89,7 +92,6 @@ public class MainWindow extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {			//运行程序
-		UIManager.put("Button.select", new Color(191, 191, 192));	//按钮按下全局颜色修改
 		createfont();		//加载字体
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -169,11 +171,29 @@ public class MainWindow extends JFrame {
 	}
 	
 	public MainWindow() {
+		/*全局样式控制*/
+		UIManager.put("Button.select", new Color(191, 191, 192));						//按钮按下全局颜色修改
+		UIManager.put("Button.background", new Color(233, 233, 234));					//按钮正常
+		UIManager.put("RadioButton.font", new Font("思源黑体 CN Medium", Font.PLAIN, 13));//单选按钮字体
+		UIManager.put("RadioButton.background", new Color(250, 250, 250));				//单选按钮背景
+		UIManager.put("RadioButton.icon", new MyRadiobuttonIcon());						//单选按钮图标
+		UIManager.put("TabbedPane.font", new Font("思源黑体 CN", Font.PLAIN, 12));		//标签字体
+		UIManager.put("TabbedPane.background", new Color(210, 210, 210));				//未选中标签背景
+		UIManager.put("TabbedPane.selected", new Color(250, 250, 250));					//选中标签背景
+		UIManager.put("TabbedPane.focus", new Color(250, 250, 250));					//标签聚焦点颜色
+		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));		//标签框框
+		UIManager.put("TitledBorder.font", new Font("思源黑体 CN Medium", Font.PLAIN, 12));//框框字体
+		UIManager.put("Slider.background", new Color(250, 250, 250));					//滑杆背景
+		UIManager.put("Slider.horizontalThumbIcon", new ImageIcon(MainWindow.class.getResource("sliderthumbflat.png")));	//滑杆图标
+		UIManager.put("Button.font", new Font("思源黑体 CN Medium", Font.PLAIN, 13));		//按钮字体
+		UIManager.put("Label.font", new Font("思源黑体 CN Medium", Font.PLAIN, 13));		//文本提示字体
+		UIManager.put("Panel.background", new Color(250, 250, 250));					//窗体背景
+		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\icon.png"));
 		setIconImage(exeimage);								//窗口图标
 		getContentPane().setBackground(backgroundcolor);	//内容背景颜色
 		setBackground(backgroundcolor);						//窗体背景颜色
-		setTitle("彩色 ID 生成工具     by o0O0o0l0o0O0o");		//窗体标题
+		setTitle("彩色ID生成工具v1.2  by o0O0o0l0o0O0o");		//窗体标题
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	//窗体关闭模式
 		setSize(400, 330);									//窗体大小
 		setLocationRelativeTo(null);						//窗体居中
@@ -264,16 +284,7 @@ public class MainWindow extends JFrame {
 		JButton choosecolor = new JButton("选择颜色...");				//按钮内容
 		choosecolor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			//鼠标点击
-				JColorChooser colorchooser = new JColorChooser();	//鼠标点击动作
-				String lookAndFeel ="com.sun.java.swing.plaf.windows.WindowsLookAndFeel";	//设置弹出窗口样式
-				try {
-					UIManager.setLookAndFeel(lookAndFeel);
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-				SwingUtilities.updateComponentTreeUI(colorchooser);						//将样式提交到颜色选择器
-				Color getcolor = colorchooser.showDialog(null, "选择颜色...", color);		//颜色选择
+				Color getcolor = JColorChooser.showDialog(getContentPane(), "选择颜色...", color);//颜色选择
 				if(getcolor == null && color == null) {								//情况1:第一次没选择颜色
 					tip3.setText("请选择颜色");
 					tip3.setFont(new Font("思源黑体 CN Light", Font.PLAIN, 14));
@@ -418,15 +429,7 @@ public class MainWindow extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							AboutWindow dialog = new AboutWindow();
-							String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();	//设置弹出窗口样式
-							try {
-								UIManager.setLookAndFeel(lookAndFeel);
-							} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-									| UnsupportedLookAndFeelException e1) {
-								e1.printStackTrace();
-							}
-							SwingUtilities.updateComponentTreeUI(dialog);					//将样式提交到关于窗口
+							AboutWindow dialog = new AboutWindow(getContentPane());
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							dialog.setVisible(true);
 						} catch (Exception e) {
