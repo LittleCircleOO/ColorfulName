@@ -5,7 +5,7 @@
 理论上支持所有能够读取html颜色标签的游戏。
 
 ## 运行截图
-![avatar](https://github.com/LittleCircleOO/ColorfulName/blob/master/pic/Screenshot_v1.0.png)
+![avatar](https://github.com/LittleCircleOO/ColorfulName/blob/master/pic/Screenshot_v1.2.png)
 
 ## 目前支持游戏列表
 * 人类一败涂地
