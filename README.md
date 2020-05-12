@@ -1,5 +1,6 @@
 # ColorfulName
-[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)  
+[![GPL-3.0 Licence](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](https://opensource.org/licenses/GPL-3.0/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/LittleCircleOO/ColorfulName?style=flat-square)](https://github.com/LittleCircleOO/ColorfulName/releases)  
 一个用于生成彩色steam ID的小工具 / A small tool for generating colorful steam ID.  
 理论上支持所有能够读取html颜色标签的游戏。
 
