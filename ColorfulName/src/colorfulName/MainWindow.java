@@ -18,8 +18,6 @@ import java.awt.datatransfer.*;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
-
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -188,12 +186,14 @@ public class MainWindow extends JFrame {
 		UIManager.put("Button.font", new Font("思源黑体 CN Medium", Font.PLAIN, 13));		//按钮字体
 		UIManager.put("Label.font", new Font("思源黑体 CN Medium", Font.PLAIN, 13));		//文本提示字体
 		UIManager.put("Panel.background", new Color(250, 250, 250));					//窗体背景
+		UIManager.put("ToolTip.background", new Color(250, 250, 250));					//提示框背景
+		UIManager.put("ToolTip.foreground", new Color(71, 102, 132));					//提示框字体颜色
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\icon.png"));
 		setIconImage(exeimage);								//窗口图标
 		getContentPane().setBackground(backgroundcolor);	//内容背景颜色
 		setBackground(backgroundcolor);						//窗体背景颜色
-		setTitle("彩色ID生成工具v1.2  by o0O0o0l0o0O0o");		//窗体标题
+		setTitle("彩色ID生成工具v1.3  by o0O0o0l0o0O0o");		//窗体标题
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	//窗体关闭模式
 		setSize(400, 330);									//窗体大小
 		setLocationRelativeTo(null);						//窗体居中
@@ -284,7 +284,7 @@ public class MainWindow extends JFrame {
 		JButton choosecolor = new JButton("选择颜色...");				//按钮内容
 		choosecolor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			//鼠标点击
-				Color getcolor = JColorChooser.showDialog(getContentPane(), "选择颜色...", color);//颜色选择
+				Color getcolor = CustomColorChooser.showDialog(getContentPane(), "选择颜色...", color);//颜色选择
 				if(getcolor == null && color == null) {								//情况1:第一次没选择颜色
 					tip3.setText("请选择颜色");
 					tip3.setFont(new Font("思源黑体 CN Light", Font.PLAIN, 14));

@@ -203,20 +203,25 @@ public class AboutWindow extends JDialog {
 		
 		
 		
-		JLabel lblId = new JLabel("<html><body>彩色 ID 生成工具 v1.2<br>由 bilibili Up主 : o0O0o0l0o0O0o 制作<br>软件已在github开源<br>遵循 GPLv3 (通用公共许可证) 协议<br>本软件完全免费,请勿售卖!</body></html>");
+		JLabel lblId = new JLabel("<html><body>彩色 ID 生成工具 v1.3<br>由 bilibili Up主 : o0O0o0l0o0O0o 制作<br>软件已在github开源<br>遵循 GPLv3 (通用公共许可证) 协议<br>本软件完全免费,请勿售卖!</body></html>");
 		lblId.setFont(new Font("思源黑体 CN", Font.PLAIN, 13));
 		lblId.setBounds(20, 10, 254, 100);
 		getContentPane().add(lblId);
 		
 		JTextPane textPane = new JTextPane();
-		textPane.setBorder(new MatteBorder(1, 1, 3, 1, textareacolor));
 		textPane.setBackground(backgroundcolor);
 		textPane.setFont(new Font("思源黑体 CN", Font.PLAIN, 12));
-		textPane.setText("v0.8：\n界面美化，逻辑功能完善\nv0.9：\n修正文本格式错误，现在可以正常展示颜色了\nv1.0：\n完善关于页面\n加入对Just Shapes & Beats的支持\n更换了新图标\nv1.1：\n修复某些设备由于字体缺失导致的显示问题\n修复取消颜色选择后导致上个颜色丢失的问题\n现在颜色选择器可以显示上次选择的颜色了\n现在更改颜色会自动清空生成框\n加入镜像下载站点与bilibili链接\nv1.2：\nWindows版本开始提供exe可执行文件\n优化了颜色选择界面与更新日志展示");
+		textPane.setText("v0.8：\n界面美化，逻辑功能完善\n"
+				+"v0.9：\n修正文本格式错误，现在可以正常展示颜色了\n"
+				+"v1.0：\n完善关于页面\n加入对Just Shapes & Beats的支持\n更换了新图标\n"
+				+"v1.1：\n修复某些设备由于字体缺失导致的显示问题\n修复取消颜色选择后导致上个颜色丢失的问题\n现在颜色选择器可以显示上次选择的颜色了\n现在更改颜色会自动清空生成框\n加入镜像下载站点与bilibili链接\n"
+				+"v1.2：\nWindows版本开始提供exe可执行文件\n优化了颜色选择界面与更新日志展示\n"
+				+"v1.3：\n优化颜色选择器设计\n新增预设颜色选项卡\n重新设计了更新日志边框");
 		textPane.setEditable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 202, 254, 189);
+		scrollPane.setBorder(new MatteBorder(2, 1, 3, 1, textareacolor));
 		scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			/*样式重定义*/
 			/**
