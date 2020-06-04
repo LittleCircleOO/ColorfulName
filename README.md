@@ -38,3 +38,8 @@
 * 完善关于页面
 * 加入对Just Shapes & Beats的支持
 * 更换了新图标
+
+## 下载地址
+
+[Github Release](https://github.com/LittleCircleOO/ColorfulName/releases)  
+[网盘分流](https://www.lanzous.com/b0awlzefi)
